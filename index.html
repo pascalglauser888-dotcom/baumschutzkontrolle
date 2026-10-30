@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Baumschutz">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Baumschutzkontrolle Region Süd</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column like a clipboard form; sticky action bar at the bottom for the thumb. */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --fg:#1f2620; --muted:#5d6a5f; --line:#d5dbd2;
+  --accent:#2f6b3a; --accent-ink:#ffffff; --accent-soft:#e3efe3;
+  --warn:#b4531a; --warn-soft:#fbeadf; --ok:#2f6b3a;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a16; --surface:#1c241e; --fg:#e7ece5; --muted:#9daa9f; --line:#334036;
+  --accent:#7fc28a; --accent-ink:#0f1a12; --accent-soft:#223a27;
+  --warn:#f0965c; --warn-soft:#3a2618; --ok:#7fc28a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a16; --surface:#1c241e; --fg:#e7ece5; --muted:#9daa9f; --line:#334036;
+  --accent:#7fc28a; --accent-ink:#0f1a12; --accent-soft:#223a27;
+  --warn:#f0965c; --warn-soft:#3a2618; --ok:#7fc28a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:17px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:640px;margin:0 auto;padding-block:20px 140px;display:flex;flex-direction:column;gap:16px}
+header h1{font-family:var(--f-display);font-weight:700;font-size:2rem;line-height:1.05;margin:0;letter-spacing:.01em;text-wrap:balance}
+header p{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+fieldset{border:1px solid var(--line);background:var(--surface);border-radius:10px;margin:0;padding:14px 14px 16px;display:flex;flex-direction:column;gap:14px;min-width:0}
+legend{font-family:var(--f-display);font-weight:600;font-size:1.15rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:0 6px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>label,.lbl{font-weight:700;font-size:.95rem}
+.req::after{content:" *";color:var(--warn)}
+input[type=text],input[type=email],input[type=date],textarea,select{
+  font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;width:100%;min-height:48px}
+textarea{min-height:88px;resize:vertical}
+input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-visible,.seg label:focus-within,.chk:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:420px){.row2{grid-template-columns:1fr}}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg label{flex:1 1 auto;min-width:88px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:11px 10px;cursor:pointer;background:var(--bg);font-weight:700;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seg.badgood label:has(input[value=Nein]:checked),.seg.badgood label:has(input[value=Mangelhaft]:checked){background:var(--warn);border-color:var(--warn);color:#fff}
+.chks{display:grid;grid-template-columns:1fr;gap:8px}
+.chk{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:11px 12px;background:var(--bg);cursor:pointer}
+.chk input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--warn);flex:none}
+.chk:has(input:checked){border-color:var(--warn);background:var(--warn-soft)}
+.hint{color:var(--muted);font-size:.88rem;margin:0}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.ph{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:var(--bg);border:1px solid var(--line);max-width:100%}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph button{position:absolute;top:4px;right:4px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:18px;line-height:1;cursor:pointer}
+.ph span{position:absolute;left:4px;bottom:4px;background:rgba(0,0,0,.65);color:#fff;font:500 .72rem var(--f-mono);padding:2px 5px;border-radius:4px}
+.btn{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:13px 16px;min-height:50px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;text-align:center}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.addphoto{border-style:dashed;width:100%}
+.preview{font:500 .82rem/1.5 var(--f-mono);white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin:0;overflow-x:auto;max-height:320px;overflow-y:auto}
+.status{overflow-wrap:anywhere;border-radius:8px;padding:10px 12px;font-size:.95rem;margin:0}
+.status.err{background:var(--warn-soft);color:var(--fg);border:1px solid var(--warn)}
+.status.ok{background:var(--accent-soft);color:var(--fg);border:1px solid var(--accent)}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bar .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr;gap:8px}
+.bar .missing{grid-column:1/-1;color:var(--warn);font-size:.85rem;margin:0}
+.actions{display:grid;grid-template-columns:1fr;gap:8px}
+.mailrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.mono{font-family:var(--f-mono);font-size:.9rem;word-break:break-all}
+@media (prefers-reduced-motion:no-preference){.btn{transition:transform .08s}.btn:active{transform:scale(.98)}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Baumschutzkontrolle</h1>
+    <p>Grüne Dienstleistung Region Süd · Erfassung vor Ort, Bericht als Word-Datei mit Fotos</p>
+  </header>
+
+  <form id="f" novalidate>
+    <div style="display:flex;flex-direction:column;gap:16px">
+    <fieldset>
+      <legend>Projekt</legend>
+      <div class="field">
+        <span class="lbl req" id="l-art">Projektart</span>
+        <div class="seg" role="radiogroup" aria-labelledby="l-art">
+          <label><input type="radio" name="art" id="art-taz" value="TAZ">TAZ</label>
+          <label><input type="radio" name="art" id="art-gs" value="GS-Projekt">GS-Projekt</label>
+          <label><input type="radio" name="art" id="art-ahb" value="AHB">AHB</label>
+          <label><input type="radio" name="art" id="art-va" value="Veranstaltung">Veranstaltung</label>
+          <label><input type="radio" name="art" id="art-bog" value="Benützung öffentlicher Grund">Benützung öffentl. Grund</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="projekt" class="req">Projekt-Nr. / Ort</label>
+        <input type="text" id="projekt" autocomplete="off" placeholder="z.B. 21915 Seefeldstrasse / Flühgasse">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="kataster">Baumkataster-Nr.</label>
+          <input type="text" id="kataster" autocomplete="off" placeholder="mehrere mit Komma">
+        </div>
+        <div class="field">
+          <label for="datum" class="req">Kontrolldatum</label>
+          <input type="date" id="datum">
+        </div>
+      </div>
+      <div class="field">
+        <label for="kontrolleur" class="req">Kontrolliert von</label>
+        <input type="text" id="kontrolleur" autocomplete="name" placeholder="Vorname Name">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Baumschutz</legend>
+      <div class="field">
+        <span class="lbl req" id="l-vorh">Baumschutz vorhanden</span>
+        <div class="seg badgood" role="radiogroup" aria-labelledby="l-vorh">
+          <label><input type="radio" name="vorh" id="vorh-ja" value="Ja">Ja</label>
+          <label><input type="radio" name="vorh" id="vorh-teil" value="Teilweise">Teilweise</label>
+          <label><input type="radio" name="vorh" id="vorh-nein" value="Nein">Nein</label>
+        </div>
+      </div>
+      <div class="field">
+        <span class="lbl" id="l-zust">Zustand Baumschutz</span>
+        <div class="seg badgood" role="radiogroup" aria-labelledby="l-zust">
+          <label><input type="radio" name="zust" id="zust-io" value="In Ordnung">In Ordnung</label>
+          <label><input type="radio" name="zust" id="zust-mh" value="Mangelhaft">Mangelhaft</label>
+        </div>
+      </div>
+      <div class="field">
+        <span class="lbl req" id="l-aufl">Auflagen eingehalten</span>
+        <div class="seg badgood" role="radiogroup" aria-labelledby="l-aufl">
+          <label><input type="radio" name="aufl" id="aufl-ja" value="Ja">Ja</label>
+          <label><input type="radio" name="aufl" id="aufl-teil" value="Teilweise">Teilweise</label>
+          <label><input type="radio" name="aufl" id="aufl-nein" value="Nein">Nein</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Mängel</legend>
+      <p class="hint">Alles anwählen, was zutrifft. Kein Mangel = nichts anwählen.</p>
+      <div class="chks" id="maengel"></div>
+      <div class="field" id="sonst-wrap" hidden>
+        <label for="sonstiges">Sonstiger Mangel</label>
+        <input type="text" id="sonstiges" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="bemerkungen">Bemerkungen</label>
+        <textarea id="bemerkungen" placeholder="Was wurde beobachtet? Was wurde vor Ort besprochen?"></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Fotos</legend>
+      <input type="file" id="fotoinput" accept="image/*" multiple hidden>
+      <button type="button" class="btn addphoto" id="addphoto">Foto aufnehmen oder auswählen</button>
+      <div class="photos" id="photos"></div>
+      <p class="hint" id="photohint">Fotos werden verkleinert und in den Word-Bericht eingefügt. Empfehlung: höchstens 8.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Nächste Kontrolle</legend>
+      <div class="row2">
+        <div class="field">
+          <label for="naechste">Geplant am</label>
+          <input type="date" id="naechste">
+        </div>
+        <div class="field">
+          <label for="rhythmus">Rhythmus</label>
+          <select id="rhythmus">
+            <option value="">– wählen –</option>
+            <option>Einmalig</option><option>Wöchentlich</option><option>14-täglich</option><option>Monatlich</option><option>Nach Bedarf</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Versand</legend>
+      <div class="field">
+        <label for="empfaenger">E-Mail Empfänger</label>
+        <input type="email" id="empfaenger" autocomplete="email" inputmode="email" placeholder="vorname.name@zuerich.ch">
+        <p class="hint">Kontrolliert von und Empfänger bleiben auf diesem Gerät gespeichert. Tipp: in Safari «Teilen › Zum Home-Bildschirm».</p>
+      </div>
+    </fieldset>
+
+    <fieldset id="result">
+      <legend>Bericht</legend>
+      <p class="status" id="msg" hidden></p>
+      <div class="actions">
+        <button type="button" class="btn primary" id="save2">Bericht erstellen</button>
+        <div class="actions" id="ready" hidden>
+          <button type="button" class="btn primary" id="share">Teilen (z.B. Outlook)</button>
+          <a class="btn" id="dl" href="#" download>Word-Datei herunterladen</a>
+        </div>
+        <button type="button" class="btn" id="copy">Text für Mail kopieren</button>
+        <div class="mailrow"><a class="btn" id="mailto" href="#">Mail-Entwurf öffnen</a><span class="hint">An: <span class="mono" id="mailaddr">–</span></span></div>
+      </div>
+      <p class="lbl" style="margin:4px 0 0">So kommt der Bericht ins Mail</p>
+      <ol class="steps">
+        <li><b>Bericht erstellen</b> antippen.</li>
+        <li><b>Teilen</b> antippen und <b>Outlook</b> wählen. Die Word-Datei mit den Fotos ist schon angehängt.</li>
+        <li>Empfänger eintragen und senden. Den Text kann man mit <b>Text kopieren</b> ins Mail einfügen.</li>
+      </ol>
+      <details>
+        <summary class="hint" style="cursor:pointer">Berichtstext anzeigen</summary>
+        <pre class="preview" id="preview"></pre>
+      </details>
+      <button type="button" class="btn" id="reset">Neue Kontrolle beginnen</button>
+    </fieldset>
+    </div>
+  </form>
+</div>
+
+<div class="bar"><div class="in">
+  <button type="button" class="btn primary" id="save">Bericht erstellen</button>
+  <button type="button" class="btn" id="copy2">Text kopieren</button>
+  <p class="missing" id="missing" hidden></p>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/docx@9.5.0/dist/index.iife.js"></script>
+<script>
+(function(){
+const MAENGEL=["Baumschutz nicht montiert","Gitter/Verschalung beschädigt","Wurzelschutz fehlt","Baumscheibe befahren/versiegelt","Leitung scheuert am Stamm","Rindenverletzung","Astbruch","Lagerung im Schutzbereich","Sonstiges"];
+const $=id=>document.getElementById(id);
+const store={get(k){try{return localStorage.getItem(k)||""}catch(e){return ""}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const photos=[]; // {name, blob, url, w, h}
+let downloads=null;let readyFile=null,readyUrl=null;
+
+// build Mängel checkboxes
+const mw=$("maengel");
+MAENGEL.forEach((m,i)=>{const l=document.createElement("label");l.className="chk";l.innerHTML='<input type="checkbox" id="m'+i+'"><span></span>';l.querySelector("span").textContent=m;l.querySelector("input").value=m;mw.appendChild(l)});
+
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function fmt(iso){if(!iso)return "";const [y,m,d]=iso.split("-");return d+"."+m+"."+y}
+function radio(n){const r=document.querySelector('input[name="'+n+'"]:checked');return r?r.value:""}
+
+$("datum").value=today();
+$("kontrolleur").value=store.get("bk_kontrolleur");
+$("empfaenger").value=store.get("bk_empfaenger");
+
+function data(){
+  const m=[...mw.querySelectorAll("input:checked")].map(x=>x.value);
+  const sonst=$("sonstiges").value.trim();
+  const list=m.map(x=>x==="Sonstiges"?("Sonstiges"+(sonst?": "+sonst:"")):x);
+  return {art:radio("art"),projekt:$("projekt").value.trim(),kataster:$("kataster").value.trim(),datum:$("datum").value,
+    kontrolleur:$("kontrolleur").value.trim(),vorh:radio("vorh"),zust:radio("zust"),aufl:radio("aufl"),
+    maengel:list,bem:$("bemerkungen").value.trim(),naechste:$("naechste").value,rhythmus:$("rhythmus").value,
+    empf:$("empfaenger").value.trim()};
+}
+function missing(d){const r=[];if(!d.art)r.push("Projektart");if(!d.projekt)r.push("Projekt-Nr./Ort");if(!d.datum)r.push("Datum");if(!d.kontrolleur)r.push("Kontrolliert von");if(!d.vorh)r.push("Baumschutz vorhanden");if(!d.aufl)r.push("Auflagen eingehalten");return r}
+function rows(d){return [
+  ["Projektart",d.art],["Projekt-Nr. / Ort",d.projekt],["Baumkataster-Nr.",d.kataster||"–"],["Kontrolldatum",fmt(d.datum)],
+  ["Kontrolliert von",d.kontrolleur],["Baumschutz vorhanden",d.vorh],["Zustand Baumschutz",d.zust||"–"],["Auflagen eingehalten",d.aufl],
+  ["Mängel",d.maengel.length?d.maengel.join(", "):"keine"],["Bemerkungen",d.bem||"–"],
+  ["Nächste Kontrolle",d.naechste?fmt(d.naechste):"nicht geplant"],["Rhythmus",d.rhythmus||"–"],["Fotos",String(photos.length)]]}
+function subject(d){return "Baumschutzkontrolle "+(d.art?d.art+" ":"")+(d.projekt||"")+(d.datum?" – "+fmt(d.datum):"")+(d.maengel.length?" – MÄNGEL":"")}
+function text(d){const r=rows(d);const w=Math.max(...r.map(x=>x[0].length))+2;
+  return "Baumschutzkontrolle\n\n"+r.map(([k,v])=>(k+":").padEnd(w)+v).join("\n")+"\n\nDer Word-Bericht mit den Fotos ist angehängt.\n\nFreundliche Grüsse\n"+(d.kontrolleur||"")}
+
+function refresh(){
+  const d=data();const miss=missing(d);
+  $("sonst-wrap").hidden=!$("m8").checked;
+  $("preview").textContent=text(d);
+  $("mailaddr").textContent=d.empf||"–";
+  $("mailto").href="mailto:"+encodeURI(d.empf)+"?subject="+encodeURIComponent(subject(d))+"&body="+encodeURIComponent(text(d));
+  const mEl=$("missing");
+  if(miss.length){mEl.hidden=false;mEl.textContent="Noch ausfüllen: "+miss.join(", ")}else{mEl.hidden=true}
+  store.set("bk_kontrolleur",d.kontrolleur);store.set("bk_empfaenger",d.empf);
+  if(readyFile){readyFile=null;$("ready").hidden=true;if(readyUrl){URL.revokeObjectURL(readyUrl);readyUrl=null}}
+}
+document.addEventListener("input",refresh);document.addEventListener("change",refresh);
+
+// photos
+$("addphoto").addEventListener("click",()=>$("fotoinput").click());
+$("fotoinput").addEventListener("change",async e=>{
+  const files=[...e.target.files];e.target.value="";
+  for(const f of files){try{photos.push(await shrink(f))}catch(err){show("err","Ein Foto konnte nicht gelesen werden ("+f.name+").")}}
+  drawPhotos();refresh();
+});
+function shrink(file){return new Promise((res,rej)=>{
+  const url=URL.createObjectURL(file);const img=new Image();
+  img.onload=()=>{const max=1600;let w=img.naturalWidth,h=img.naturalHeight;const s=Math.min(1,max/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
+    const c=document.createElement("canvas");c.width=w;c.height=h;c.getContext("2d").drawImage(img,0,0,w,h);URL.revokeObjectURL(url);
+    c.toBlob(b=>{if(!b)return rej();res({blob:b,url:URL.createObjectURL(b),w,h})},"image/jpeg",0.8)};
+  img.onerror=()=>{URL.revokeObjectURL(url);rej()};img.src=url})}
+function drawPhotos(){const p=$("photos");p.innerHTML="";
+  photos.forEach((ph,i)=>{const d=document.createElement("div");d.className="ph";
+    d.innerHTML='<img alt=""><span></span><button type="button" aria-label="Foto entfernen">×</button>';
+    d.querySelector("img").src=ph.url;d.querySelector("img").alt="Foto "+(i+1);d.querySelector("span").textContent=String(i+1);
+    d.querySelector("button").onclick=()=>{URL.revokeObjectURL(ph.url);photos.splice(i,1);drawPhotos();refresh()};p.appendChild(d)});
+  $("addphoto").textContent=photos.length?"Weiteres Foto hinzufügen":"Foto aufnehmen oder auswählen";
+}
+
+function show(kind,t){const m=$("msg");m.hidden=false;m.className="status "+kind;m.textContent=t;$("result").scrollIntoView({behavior:"smooth",block:"start"})}
+
+// docx
+async function buildDocx(d){
+  const D=window.docx;if(!D)throw new Error("lib");
+  const {Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,WidthType,ImageRun,HeadingLevel,BorderStyle,ShadingType}=D;
+  const b={style:BorderStyle.SINGLE,size:4,color:"BFC7BC"};const borders={top:b,bottom:b,left:b,right:b,insideHorizontal:b,insideVertical:b};
+  const cell=(t,bold,shade)=>new TableCell({width:{size:bold?32:68,type:WidthType.PERCENTAGE},
+    shading:shade?{type:ShadingType.CLEAR,color:"auto",fill:shade}:undefined,margins:{top:60,bottom:60,left:100,right:100},
+    children:String(t).split("\n").map(line=>new Paragraph({children:[new TextRun({text:line,bold:!!bold,font:"Arial",size:21})]}))});
+  const isBad=k=>(k==="Mängel"&&d.maengel.length)||((k==="Baumschutz vorhanden"||k==="Auflagen eingehalten")&&(/Nein|Teilweise/.test(k==="Baumschutz vorhanden"?d.vorh:d.aufl)));
+  const table=new Table({width:{size:100,type:WidthType.PERCENTAGE},borders,
+    rows:rows(d).map(([k,v])=>new TableRow({children:[cell(k,true,"EEF1EC"),cell(v,false,isBad(k)?"FBEADF":null)]}))});
+  const kids=[
+    new Paragraph({heading:HeadingLevel.HEADING_1,children:[new TextRun({text:"Baumschutzkontrolle",font:"Arial",bold:true,size:36})]}),
+    new Paragraph({spacing:{after:200},children:[new TextRun({text:"Grün Stadt Zürich · Grüne Dienstleistung Region Süd",font:"Arial",size:20,color:"5D6A5F"})]}),
+    table];
+  if(photos.length){
+    kids.push(new Paragraph({spacing:{before:300,after:120},children:[new TextRun({text:"Fotos",font:"Arial",bold:true,size:28})]}));
+    for(let i=0;i<photos.length;i++){const ph=photos[i];const buf=await ph.blob.arrayBuffer();
+      const maxW=440,maxH=560;const s=Math.min(maxW/ph.w,maxH/ph.h);
+      kids.push(new Paragraph({keepNext:true,children:[new ImageRun({type:"jpg",data:buf,transformation:{width:Math.round(ph.w*s),height:Math.round(ph.h*s)}})]}));
+      kids.push(new Paragraph({spacing:{after:200},children:[new TextRun({text:"Foto "+(i+1)+" – "+d.projekt+", "+fmt(d.datum),font:"Arial",size:18,color:"5D6A5F"})]}));}
+  }
+  const doc=new Document({creator:d.kontrolleur||"GSZ",title:subject(d),sections:[{properties:{page:{margin:{top:1000,bottom:1000,left:1100,right:1100}}},children:kids}]});
+  return Packer.toBlob(doc);
+}
+function fname(d){const p=(d.projekt||"Projekt").replace(/[^\wäöüÄÖÜ-]+/g,"_").replace(/_+/g,"_").slice(0,50);return "Baumschutzkontrolle_"+p+"_"+(d.datum||today())+".docx"}
+
+let busy=false;
+const DOCX="application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+function setBtns(t,dis){["save","save2"].forEach(id=>{$(id).disabled=dis;$(id).textContent=t})}
+async function save(){
+  if(busy)return;const d=data();const miss=missing(d);
+  if(miss.length){show("err","Bitte zuerst ausfüllen: "+miss.join(", ")+".");return}
+  if(!window.docx){show("err","Der Word-Baustein konnte nicht geladen werden. Internetverbindung prüfen und die Seite neu laden. Bis dahin: Text kopieren und Fotos in Outlook anhängen.");return}
+  busy=true;setBtns("Bericht wird erstellt …",true);
+  try{
+    const blob=await buildDocx(d);const name=fname(d);
+    if(downloads){await downloads.save({filename:name,data:blob});show("ok","Bericht gespeichert: "+name+".");return}
+    readyFile=new File([blob],name,{type:DOCX});
+    if(readyUrl)URL.revokeObjectURL(readyUrl);readyUrl=URL.createObjectURL(readyFile);
+    $("dl").href=readyUrl;$("dl").setAttribute("download",name);
+    const canShare=!!(navigator.canShare&&navigator.canShare({files:[readyFile]}));
+    $("share").hidden=!canShare;$("ready").hidden=false;
+    show("ok","Bericht erstellt ("+photos.length+(photos.length===1?" Foto":" Fotos")+"). Jetzt «"+(canShare?"Teilen":"Word-Datei herunterladen")+"» antippen.");
+  }catch(e){
+    const c=e&&e.code;
+    if(c==="declined")show("err","Speichern abgebrochen. Nochmals versuchen.");
+    else show("err","Der Bericht konnte nicht erstellt werden"+(c?" ("+c+")":"")+". Notlösung: Text kopieren und Fotos in Outlook anhängen.");
+  }finally{busy=false;setBtns("Bericht erstellen",false)}
+}
+$("share").addEventListener("click",()=>{
+  if(!readyFile){show("err","Bitte zuerst «Bericht erstellen» antippen.");return}
+  const d=data();
+  navigator.share({files:[readyFile],title:subject(d),text:text(d)}).then(()=>show("ok","Bericht geteilt. In Outlook Empfänger prüfen und senden."),err=>{
+    if(err&&err.name==="AbortError")return;
+    show("err","Teilen ging nicht ("+(err&&err.name||"Fehler")+"). Bitte «Word-Datei herunterladen» verwenden und in Outlook anhängen.")});
+});
+$("save").addEventListener("click",save);$("save2").addEventListener("click",save);
+
+function copy(){const t=text(data());
+  const done=()=>show("ok","Text kopiert. In Outlook in eine neue Mail einfügen.");
+  const fallback=()=>{const det=document.querySelector("details");det.open=true;const r=document.createRange();r.selectNodeContents($("preview"));const s=getSelection();s.removeAllRanges();s.addRange(r);
+    show("err","Kopieren wurde blockiert. Der Text ist unten markiert: lange drücken und «Kopieren» wählen.")};
+  try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}}
+$("copy").addEventListener("click",copy);$("copy2").addEventListener("click",copy);
+
+// two-step reset (no confirm())
+let armed=false,timer=null;
+$("reset").addEventListener("click",()=>{
+  if(!armed){armed=true;$("reset").textContent="Wirklich alles löschen? Nochmals antippen";timer=setTimeout(()=>{armed=false;$("reset").textContent="Neue Kontrolle beginnen"},4000);return}
+  clearTimeout(timer);armed=false;$("reset").textContent="Neue Kontrolle beginnen";
+  const keepK=$("kontrolleur").value,keepE=$("empfaenger").value;
+  $("f").reset();$("kontrolleur").value=keepK;$("empfaenger").value=keepE;$("datum").value=today();
+  photos.forEach(p=>URL.revokeObjectURL(p.url));photos.length=0;drawPhotos();$("msg").hidden=true;refresh();window.scrollTo({top:0,behavior:"smooth"});
+});
+$("f").addEventListener("submit",e=>e.preventDefault());
+
+refresh();
+if(window.claude&&window.claude.use){window.claude.use("downloads").then(x=>{downloads=x}).catch(()=>{})}
+})();
+</script>
+
+</body>
+</html>
